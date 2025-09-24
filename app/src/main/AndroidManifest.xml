@@ -12,7 +12,7 @@
         android:theme="@style/Theme.Pedometer">
 
         <activity
-            android:name=".TodayStatsActivity"
+            android:name=".todaystats.TodayStatsActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Pedometer">
@@ -24,7 +24,7 @@
         </activity>
 
         <activity
-            android:name=".TotalStatsActivity"
+            android:name=".totalstats.TotalStatsActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Pedometer">
@@ -35,7 +35,7 @@
         </activity>
 
         <activity
-            android:name=".ProfileActivity"
+            android:name=".settings.ProfileActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Pedometer">

@@ -14,6 +14,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import io.github.bagdad1970.pedometer.settings.ProfileActivity
+import io.github.bagdad1970.pedometer.todaystats.TodayStatsActivity
+import io.github.bagdad1970.pedometer.totalstats.TotalStatsActivity
 
 
 @Composable
