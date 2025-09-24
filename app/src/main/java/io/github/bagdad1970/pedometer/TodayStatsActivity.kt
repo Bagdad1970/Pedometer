@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.ModalDrawer
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -24,8 +26,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -56,6 +64,9 @@ class TodayStatsActivity : ComponentActivity() {
 
 @Composable
 fun TodayStatisticsScreen(modifier: Modifier) {
+    var todaySteps by remember { mutableIntStateOf(8452) }
+    var targetSteps by remember { mutableIntStateOf(10000) }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -64,8 +75,9 @@ fun TodayStatisticsScreen(modifier: Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         StepsProgressIndicator(
-            currentSteps = 7543,
-            targetSteps = 10000,
+            currentSteps = todaySteps,
+            targetSteps = targetSteps,
+            onResetSteps = { todaySteps = 0 },
             modifier = Modifier.padding(16.dp)
         )
         TodayInfo()
@@ -76,6 +88,7 @@ fun TodayStatisticsScreen(modifier: Modifier) {
 fun StepsProgressIndicator(
     currentSteps: Int,
     targetSteps: Int,
+    onResetSteps: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val progress = currentSteps.toFloat() / targetSteps.toFloat()
@@ -102,18 +115,30 @@ fun StepsProgressIndicator(
                     fontWeight = FontWeight.Bold
                 )
             )
+
             Spacer(modifier = Modifier.height(15.dp))
+
             Text(
                 text = "Цель: $targetSteps",
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Spacer(modifier = Modifier.height(15.dp))
+
             Text(
                 text = "$progressPercent%",
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary
             )
+
+            Spacer(modifier = Modifier.height(15.dp))
+
+            Button(modifier = Modifier, onClick = onResetSteps) {
+                Text(
+                    text = "Сбросить",
+                    style = MaterialTheme.typography.labelLarge,
+                )
+            }
         }
     }
 }
