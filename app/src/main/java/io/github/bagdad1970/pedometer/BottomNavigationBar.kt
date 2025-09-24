@@ -2,6 +2,8 @@ package io.github.bagdad1970.pedometer
 
 import android.content.Intent
 import androidx.compose.foundation.layout.height
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -28,29 +30,35 @@ fun BottomNavigationBar(currentScreen: AppActivity) {
             selected = currentScreen == AppActivity.TODAY_STATS,
             onClick = {
                 if (currentScreen != AppActivity.TODAY_STATS) {
-                    context.startActivity(Intent(context, TodayStatsActivity::class.java))
+                    val intent = Intent(context, TodayStatsActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                    context.startActivity(intent)
                 }
             }
         )
 
         NavigationBarItem(
             icon = { Icon(painter = painterResource(R.drawable.total_statistics_nav_icon), contentDescription = "Отчет") },
-            label = { Text("Главная") },
+            label = { Text("Отчет") },
             selected = currentScreen == AppActivity.TOTAL_STATS,
             onClick = {
                 if (currentScreen != AppActivity.TOTAL_STATS) {
-                    context.startActivity(Intent(context, TotalStatsActivity::class.java))
+                    val intent = Intent(context, TotalStatsActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                    context.startActivity(intent)
                 }
             }
         )
 
         NavigationBarItem(
-            icon = { Icon(painter = painterResource(R.drawable.profile_nav_icon), contentDescription = "Профиль") },
-            label = { Text("Профиль") },
-            selected = currentScreen == AppActivity.PROFILE,
+            icon = { Icon(Icons.Default.Settings, contentDescription = "Настройки") },
+            label = { Text("Настройки") },
+            selected = currentScreen == AppActivity.SETTINGS,
             onClick = {
-                if (currentScreen != AppActivity.PROFILE) {
-                    context.startActivity(Intent(context, ProfileActivity::class.java))
+                if (currentScreen != AppActivity.SETTINGS) {
+                    val intent = Intent(context, ProfileActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                    context.startActivity(intent)
                 }
             }
         )
