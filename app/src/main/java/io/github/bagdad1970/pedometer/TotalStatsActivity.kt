@@ -1,9 +1,10 @@
 package io.github.bagdad1970.pedometer
 
+
+import java.util.Locale
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,16 +28,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+
 class TotalStatsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             Scaffold (
                 modifier = Modifier
@@ -63,15 +63,15 @@ fun TotalStatsScreen(modifier: Modifier) {
     val maxStepsPerDay = stepsByDayPerWeek.maxOrNull() ?: 0
     Column(
         modifier = modifier
-            .padding(10.dp)
+            .padding(top = 20.dp, start = 10.dp, end = 10.dp, bottom = 10.dp)
     ) {
 
         Card(modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom=16.dp)
+            .padding(bottom = 16.dp)
         ) {
             Column(
-                modifier = Modifier.padding(14.dp)
+                modifier = Modifier.padding(7.dp)
             ) {
 
                 Row(
@@ -83,13 +83,6 @@ fun TotalStatsScreen(modifier: Modifier) {
                         style = MaterialTheme.typography.titleSmall,
                         modifier = Modifier.weight(1f)
                     )
-
-                    Button(
-                        onClick = { },
-                        modifier = Modifier.width(130.dp)
-                    ) {
-                        Text(text = "Подробнее")
-                    }
                 }
 
                 Row(
@@ -105,6 +98,13 @@ fun TotalStatsScreen(modifier: Modifier) {
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
+                            Text(
+                                text = "${String.format(Locale.UK, "%.1f", steps / 1000.0)} т.",
+                                style = MaterialTheme.typography.labelSmall,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier
+                                    .padding(top = 4.dp)
+                            )
 
                             Box(
                                 modifier = Modifier
@@ -115,6 +115,7 @@ fun TotalStatsScreen(modifier: Modifier) {
                                         shape = RoundedCornerShape(4.dp)
                                     )
                             )
+
                             Text(
                                 text = when (index) {
                                     0 -> "Пн"
@@ -153,10 +154,7 @@ fun TotalStatsScreen(modifier: Modifier) {
                 title = "Максимальный путь за день",
                 value = "9.3 км"
             )
-
         }
-
-
     }
 
 }
@@ -172,8 +170,8 @@ fun CardInfo(modifier: Modifier,
             .aspectRatio(1f)
     ) {
         Column(modifier = Modifier
-                .fillMaxSize()
-                .padding(10.dp),
+            .fillMaxSize()
+            .padding(10.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         )
