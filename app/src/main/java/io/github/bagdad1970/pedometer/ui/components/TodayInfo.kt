@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.github.bagdad1970.pedometer.R
@@ -30,9 +31,9 @@ fun TodayInfo() {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
-        TodayInfoColumn(R.drawable.distance_logo, "1,96", "км")
-        TodayInfoColumn(R.drawable.calories_logo, "189", "ккал")
-        TodayInfoColumn(R.drawable.time_logo, "1:45", "Время")
+        TodayInfoColumn(R.drawable.distance_logo, "1,96", stringResource(id = R.string.kilometers_today))
+        TodayInfoColumn(R.drawable.calories_logo, "189", stringResource(id = R.string.kilocalories_today))
+        TodayInfoColumn(R.drawable.time_logo, "1:45", stringResource(id = R.string.time_today))
     }
 }
 

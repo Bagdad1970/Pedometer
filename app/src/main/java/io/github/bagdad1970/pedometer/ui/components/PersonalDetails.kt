@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,8 +48,8 @@ fun SexChoice(
         ) {
             Text(
                 text = when (sex) {
-                    Sex.MALE -> "Мужской"
-                    Sex.FEMALE -> "Женский"
+                    Sex.MALE -> stringResource(id = R.string.male)
+                    Sex.FEMALE -> stringResource(id = R.string.female)
                 },
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -69,7 +70,7 @@ fun SexChoice(
             DropdownMenuItem(
                 text = {
                     Text(
-                        text = "Мужской",
+                        text = stringResource(id = R.string.male),
                         modifier = Modifier.padding(start = 4.dp)
                     )
                 },
@@ -80,7 +81,7 @@ fun SexChoice(
                 leadingIcon = {
                     Icon(
                         painter = painterResource(R.drawable.male),
-                        contentDescription = "Мужской",
+                        contentDescription = "male",
                         modifier = Modifier.size(20.dp)
                     )
                 }
@@ -89,7 +90,7 @@ fun SexChoice(
             DropdownMenuItem(
                 text = {
                     Text(
-                        text = "Женский",
+                        text = stringResource(id = R.string.female),
                         modifier = Modifier.padding(start = 4.dp)
                     )
                 },
@@ -100,7 +101,7 @@ fun SexChoice(
                 leadingIcon = {
                     Icon(
                         painter = painterResource(R.drawable.female),
-                        contentDescription = "Женский",
+                        contentDescription = "female",
                         modifier = Modifier.size(20.dp)
                     )
                 }

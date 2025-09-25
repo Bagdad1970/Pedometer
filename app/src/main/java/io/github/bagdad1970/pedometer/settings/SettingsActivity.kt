@@ -17,9 +17,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.github.bagdad1970.pedometer.AppActivity
 import io.github.bagdad1970.pedometer.BottomNavigationBar
+import io.github.bagdad1970.pedometer.R
 import io.github.bagdad1970.pedometer.ui.components.PersonalDetailChoice
 
 class ProfileActivity : ComponentActivity() {
@@ -62,7 +64,7 @@ fun SettingsView(modifier: Modifier) {
     ) {
         PersonalDetailChoice(
             modifier,
-            detailName = "пол",
+            detailName = stringResource(id = R.string.sex_name),
             value = sex,
             metric = "",
             onChanged = { newSex -> sex = newSex as Sex }
@@ -70,9 +72,9 @@ fun SettingsView(modifier: Modifier) {
 
         PersonalDetailChoice(
             modifier,
-            detailName = "рост",
+            detailName = stringResource(id = R.string.height_name),
             value = height,
-            metric = "см",
+            metric = stringResource(id = R.string.height_metric),
             startPickerValue = 100,
             endPickerValue = 250,
             onChanged = { newHeight -> height = newHeight as Int }
@@ -80,9 +82,9 @@ fun SettingsView(modifier: Modifier) {
 
         PersonalDetailChoice(
             modifier,
-            detailName = "вес",
+            detailName = stringResource(id = R.string.weight_metric),
             value = weight,
-            metric = "кг",
+            metric = stringResource(id = R.string.weight_metric),
             startPickerValue = 15,
             endPickerValue = 300,
             onChanged = { newWeight -> weight = newWeight as Int }
@@ -90,9 +92,9 @@ fun SettingsView(modifier: Modifier) {
 
         PersonalDetailChoice(
             modifier,
-            detailName = "возраст",
+            detailName = stringResource(id = R.string.age_name),
             value = age,
-            metric = "лет",
+            metric = stringResource(id = R.string.age_metric),
             startPickerValue = 12,
             endPickerValue = 99,
             onChanged = { newAge -> age = newAge as Int }

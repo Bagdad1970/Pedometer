@@ -15,9 +15,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.github.bagdad1970.pedometer.AppActivity
 import io.github.bagdad1970.pedometer.BottomNavigationBar
+import io.github.bagdad1970.pedometer.R
 import io.github.bagdad1970.pedometer.ui.components.TotalInfo
 import io.github.bagdad1970.pedometer.ui.components.WeekInfo
 
@@ -59,7 +61,7 @@ fun TotalStatsScreen(modifier: Modifier) {
         ) {
             TotalInfo(
                 modifier = Modifier.weight(1f),
-                title = "Максимум шагов за день",
+                title = stringResource(id = R.string.max_steps_per_day),
                 value = "25648"
             )
 
@@ -67,8 +69,8 @@ fun TotalStatsScreen(modifier: Modifier) {
 
             TotalInfo(
                 modifier = Modifier.weight(1f),
-                title = "Максимальный путь за день",
-                value = "9.3 км"
+                title = stringResource(id = R.string.max_distance_per_day),
+                value = "9.3 ${stringResource(id = R.string.total_max_distance_metric)}"
             )
         }
     }

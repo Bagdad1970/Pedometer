@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.github.bagdad1970.pedometer.settings.ProfileActivity
 import io.github.bagdad1970.pedometer.todaystats.TodayStatsActivity
@@ -28,8 +29,8 @@ fun BottomNavigationBar(currentScreen: AppActivity) {
         containerColor = Color(145, 116, 230)
     ) {
         NavigationBarItem(
-            icon = { Icon(painter = painterResource(R.drawable.today_statistics_nav_icon), contentDescription = "Сегодня") },
-            label = { Text("Сегодня") },
+            icon = { Icon(painter = painterResource(R.drawable.today_statistics_nav_icon), contentDescription = "today") },
+            label = { Text(stringResource(id = R.string.today_stats_nav)) },
             selected = currentScreen == AppActivity.TODAY_STATS,
             onClick = {
                 if (currentScreen != AppActivity.TODAY_STATS) {
@@ -41,8 +42,8 @@ fun BottomNavigationBar(currentScreen: AppActivity) {
         )
 
         NavigationBarItem(
-            icon = { Icon(painter = painterResource(R.drawable.total_statistics_nav_icon), contentDescription = "Отчет") },
-            label = { Text("Отчет") },
+            icon = { Icon(painter = painterResource(R.drawable.total_statistics_nav_icon), contentDescription = "total") },
+            label = { Text(stringResource(id = R.string.total_stats_nav)) },
             selected = currentScreen == AppActivity.TOTAL_STATS,
             onClick = {
                 if (currentScreen != AppActivity.TOTAL_STATS) {
@@ -54,8 +55,8 @@ fun BottomNavigationBar(currentScreen: AppActivity) {
         )
 
         NavigationBarItem(
-            icon = { Icon(Icons.Default.Settings, contentDescription = "Настройки") },
-            label = { Text("Настройки") },
+            icon = { Icon(Icons.Default.Settings, contentDescription = "settings") },
+            label = { Text(stringResource(id = R.string.settings_nav)) },
             selected = currentScreen == AppActivity.SETTINGS,
             onClick = {
                 if (currentScreen != AppActivity.SETTINGS) {

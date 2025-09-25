@@ -1,3 +1,43 @@
 <resources>
+
     <string name="app_name">Pedometer</string>
+
+    <!-- Bottom Navigation -->
+    <string name="today_stats_nav">Today</string>
+    <string name="total_stats_nav">Total</string>
+    <string name="settings_nav">Settings</string>
+
+    <!-- Today screen -->
+    <string name="target">Target</string>
+    <string name="reset_button">Reset</string>
+    <string name="kilometers_today">km</string>
+    <string name="kilocalories_today">kcal</string>
+    <string name="time_today">Time</string>
+
+    <!-- Total screen -->
+    <string name="week_label">The last 7 days</string>
+    <string name="monday">Mo</string>
+    <string name="tuesday">Tu</string>
+    <string name="wednesday">We</string>
+    <string name="thursday">Th</string>
+    <string name="friday">Fr</string>
+    <string name="saturday">Sa</string>
+    <string name="sunday">Su</string>
+
+    <string name="max_steps_per_day">Max steps per day</string>
+    <string name="max_distance_per_day">Max distance per day</string>
+
+    <!-- Settings screen -->
+    <string name="sex_name">Sex</string>
+    <string name="height_name">Height</string>
+    <string name="weight_name">Weight</string>
+    <string name="age_name">Age</string>
+
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="height_metric">cm</string>
+    <string name="weight_metric">kg</string>
+    <string name="age_metric">years</string>
+
+
 </resources>

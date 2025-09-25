@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Шагомер</string>
+
+    <!-- Bottom Navigation -->
+    <string name="today_stats_nav">Сегодня</string>
+    <string name="total_stats_nav">Всего</string>
+    <string name="settings_nav">Настройки</string>
+
+    <!-- Today screen -->
+    <string name="target">Цель</string>
+    <string name="reset_button">Сбросить</string>
+    <string name="kilometers_today">км</string>
+    <string name="kilocalories_today">ккал</string>
+    <string name="time_today">Время</string>
+
+    <!-- Total screen -->
+    <string name="week_label">Последние 7 дней</string>
+    <string name="monday">Пн</string>
+    <string name="tuesday">Вт</string>
+    <string name="wednesday">Ср</string>
+    <string name="thursday">Чт</string>
+    <string name="friday">Пт</string>
+    <string name="saturday">Сб</string>
+    <string name="sunday">Вс</string>
+
+    <string name="max_steps_per_day">Макс. шагов в день</string>
+    <string name="max_distance_per_day">Макс. расстояние в день</string>
+
+    <!-- Settings screen -->
+    <string name="sex_name">Пол</string>
+    <string name="height_name">Рост</string>
+    <string name="weight_name">Вес</string>
+    <string name="age_name">Возраст</string>
+
+    <string name="male">Мужской</string>
+    <string name="female">Женский</string>
+    <string name="height_metric">см</string>
+    <string name="weight_metric">кг</string>
+    <string name="age_metric">лет</string>
+</resources>
