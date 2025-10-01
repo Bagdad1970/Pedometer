@@ -1,5 +1,6 @@
 package io.github.bagdad1970.pedometer.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +16,10 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
@@ -35,8 +40,11 @@ fun DialogWithNumberPicker(
     onDismissRequest: () -> Unit,
     onConfirmation: (Int) -> Unit,
     startValue: Int,
-    endValue: Int
+    endValue: Int,
+    currentValue: Int?,
 ) {
+    var selectedValue by remember { mutableIntStateOf(currentValue ?: startValue) }
+
     Dialog(onDismissRequest = onDismissRequest) {
         Card(
             modifier = Modifier
@@ -60,6 +68,9 @@ fun DialogWithNumberPicker(
                 NumberPicker(
                     startValue = startValue,
                     endValue = endValue,
+                    onValueChanged = { newValue ->
+                        selectedValue = newValue
+                    }
                 )
 
                 Row(
@@ -74,7 +85,7 @@ fun DialogWithNumberPicker(
                         Text("Отмена")
                     }
                     TextButton(
-                        onClick = { onConfirmation(150) },
+                        onClick = { onConfirmation(selectedValue) },
                         modifier = Modifier.padding(8.dp),
                     ) {
                         Text("ОК")
@@ -91,19 +102,19 @@ fun NumberPicker(
     modifier: Modifier = Modifier,
     startValue: Int,
     endValue: Int,
+    onValueChanged: (Int) -> Unit
 ) {
     Box(
         modifier = modifier
     )
     {
         val shownCount = 3 + 1
-        val height = 16.dp
 
         LazyColumn(
             state = rememberLazyListState(),
             modifier = Modifier
                 .padding(10.dp)
-                .height(height * shownCount)
+                .height(16.dp * shownCount)
                 .graphicsLayer { compositingStrategy = CompositingStrategy.Offscreen }
                 .drawWithContent {
                     drawContent()
@@ -126,12 +137,15 @@ fun NumberPicker(
             }
 
             items(endValue - startValue + 1) { index ->
-                val heightValue = startValue + index
+                val value = startValue + index
                 Text(
                     modifier = Modifier
                         .padding(5.dp)
-                        .fillMaxWidth(),
-                    text = "$heightValue",
+                        .fillMaxWidth()
+                        .clickable {
+                            onValueChanged(value)
+                        },
+                    text = "$value",
                     fontSize = 16.sp,
                     textAlign = TextAlign.Center,
                 )

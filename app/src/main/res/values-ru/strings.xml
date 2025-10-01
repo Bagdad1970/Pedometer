@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">Шагомер</string>
 
     <!-- Bottom Navigation -->
@@ -25,6 +26,7 @@
 
     <string name="max_steps_per_day">Макс. шагов в день</string>
     <string name="max_distance_per_day">Макс. расстояние в день</string>
+    <string name="total_max_distance_metric">км</string>
 
     <!-- Settings screen -->
     <string name="sex_name">Пол</string>
@@ -37,4 +39,5 @@
     <string name="height_metric">см</string>
     <string name="weight_metric">кг</string>
     <string name="age_metric">лет</string>
+
 </resources>

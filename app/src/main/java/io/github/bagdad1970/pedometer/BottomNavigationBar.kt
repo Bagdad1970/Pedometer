@@ -15,7 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import io.github.bagdad1970.pedometer.settings.ProfileActivity
+import io.github.bagdad1970.pedometer.settings.SettingsActivity
 import io.github.bagdad1970.pedometer.todaystats.TodayStatsActivity
 import io.github.bagdad1970.pedometer.totalstats.TotalStatsActivity
 
@@ -60,7 +60,7 @@ fun BottomNavigationBar(currentScreen: AppActivity) {
             selected = currentScreen == AppActivity.SETTINGS,
             onClick = {
                 if (currentScreen != AppActivity.SETTINGS) {
-                    val intent = Intent(context, ProfileActivity::class.java)
+                    val intent = Intent(context, SettingsActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                     context.startActivity(intent)
                 }

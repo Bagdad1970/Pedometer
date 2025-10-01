@@ -26,6 +26,7 @@
 
     <string name="max_steps_per_day">Max steps per day</string>
     <string name="max_distance_per_day">Max distance per day</string>
+    <string name="total_max_distance_metric">km</string>
 
     <!-- Settings screen -->
     <string name="sex_name">Sex</string>

@@ -15,6 +15,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.currentComposer
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,12 +24,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.github.bagdad1970.pedometer.R
 import io.github.bagdad1970.pedometer.settings.Sex
-import java.util.Locale
 
 
 @Composable
@@ -118,7 +117,8 @@ fun PersonalDetailChoice(
     metric: String? = null,
     startPickerValue: Int = 0,
     endPickerValue: Int = 100,
-    onChanged: (Any) -> Unit
+    currentValue: Int? = null,
+    onChanged: (Any) -> Unit,
 ) {
     var openDialog by remember { mutableStateOf(false) }
 
@@ -174,6 +174,7 @@ fun PersonalDetailChoice(
                         },
                         startValue = startPickerValue,
                         endValue = endPickerValue,
+                        currentValue = currentValue
                     )
                 }
             }

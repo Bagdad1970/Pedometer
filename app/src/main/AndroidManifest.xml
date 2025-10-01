@@ -9,7 +9,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Pedometer">
+        android:theme="@style/Theme.Pedometer"
+
+        android:localeConfig="@xml/locales_config">
 
         <activity
             android:name=".todaystats.TodayStatsActivity"
@@ -35,7 +37,7 @@
         </activity>
 
         <activity
-            android:name=".settings.ProfileActivity"
+            android:name=".settings.SettingsActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Pedometer">
