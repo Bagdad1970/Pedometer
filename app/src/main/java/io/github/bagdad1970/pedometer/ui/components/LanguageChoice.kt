@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -22,18 +24,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-
 @Composable
-fun NumberPersonalDetailChoice(
+fun LanguageChoice(
     modifier: Modifier,
     detailName: String,
-    value: Int,
-    metric: String? = null,
-    startPickerValue: Int = 0,
-    endPickerValue: Int = 350,
-    onChanged: (Int) -> Unit,
+    language: String? = "EN",
+    onChanged: (String) -> Unit
 ) {
-    var openDialog by remember { mutableStateOf(false) }
+    var expanded by remember { mutableStateOf(false) }
 
     Row(
         modifier = modifier
@@ -51,36 +49,57 @@ fun NumberPersonalDetailChoice(
         Box {
             Row(
                 modifier = Modifier
-                    .clickable { openDialog = true }
+                    .clickable { expanded = true }
                     .padding(4.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(
-                    text = "$value ${metric ?: ""}".trim(),
+                    text = when (language) {
+                        "EN" -> "English"
+                        "RU" -> "Русский"
+                        else -> { "EN" }
+                    },
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
                 )
 
                 Icon(
                     imageVector = Icons.Default.ArrowDropDown,
-                    contentDescription = "Выбрать $detailName",
+                    contentDescription = "Выбрать язык",
                     modifier = Modifier.size(20.dp)
                 )
             }
 
-            if (openDialog) {
-                DialogWithNumberPicker(
-                    detailName = detailName,
-                    onDismissRequest = { openDialog = false },
-                    onConfirmation = { newValue ->
-                        onChanged(newValue)
-                        openDialog = false
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = "English",
+                            modifier = Modifier.padding(start = 4.dp)
+                        )
                     },
-                    startValue = startPickerValue,
-                    endValue = endPickerValue,
-                    currentValue = value
+                    onClick = {
+                        onChanged("EN")
+                        expanded = false
+                    },
+                )
+
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = "Русский",
+                            modifier = Modifier.padding(start = 4.dp)
+                        )
+                    },
+                    onClick = {
+                        onChanged("RU")
+                        expanded = false
+                    },
                 )
             }
         }

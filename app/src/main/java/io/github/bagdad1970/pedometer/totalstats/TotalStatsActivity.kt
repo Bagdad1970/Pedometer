@@ -52,7 +52,6 @@ fun TotalStatsScreen(modifier: Modifier) {
         modifier = modifier
             .padding(top = 20.dp, start = 10.dp, end = 10.dp, bottom = 10.dp)
     ) {
-
         WeekInfo()
 
         Row(

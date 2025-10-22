@@ -20,31 +20,26 @@
             android:theme="@style/Theme.Pedometer">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".settings.AuthActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Pedometer">
         </activity>
 
         <activity
             android:name=".totalstats.TotalStatsActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.Pedometer">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
             android:name=".settings.SettingsActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.Pedometer">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

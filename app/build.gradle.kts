@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.androidx.foundation)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.material3)
+    implementation(libs.material3)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -62,9 +63,10 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
-    
 
     implementation("androidx.activity:activity-compose:1.9.3")
     implementation("androidx.compose.material:material:1.7.4")
     implementation("androidx.navigation:navigation-compose:2.8.3")
+    implementation("androidx.core:core-splashscreen:1.0.0")
+    implementation("androidx.compose.material:material-icons-extended:1.7.8")
 }
