@@ -22,8 +22,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
+import io.github.bagdad1970.pedometer.R
 
 
 @Composable
@@ -74,9 +76,9 @@ fun StepsProgress(
     ) {
         CircularProgressIndicator(
             progress = { animatedProgress },
-            modifier = Modifier.size(350.dp),
+            modifier = Modifier.size(dimensionResource(id = R.dimen.steps_progress_indicator_size)),
             color = MaterialTheme.colorScheme.primary,
-            strokeWidth = 14.dp,
+            strokeWidth = dimensionResource(id = R.dimen.steps_progress_indicator_stroke_width),
             trackColor = MaterialTheme.colorScheme.surfaceVariant,
             strokeCap = ProgressIndicatorDefaults.CircularDeterminateStrokeCap,
         )
@@ -90,14 +92,15 @@ fun StepsProgress(
                 )
             )
 
-            Spacer(modifier = Modifier.height(15.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.steps_progress_spacer)))
 
             Text(
-                text = "Цель: $targetSteps",
+                text = "${stringResource(id = R.string.target)}: $targetSteps",
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            Spacer(modifier = Modifier.height(15.dp))
+
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.steps_progress_spacer)))
 
             Text(
                 text = "$progressPercent%",
@@ -105,11 +108,11 @@ fun StepsProgress(
                 color = MaterialTheme.colorScheme.primary
             )
 
-            Spacer(modifier = Modifier.height(15.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.steps_progress_spacer)))
 
             Button(modifier = Modifier, onClick = onResetSteps) {
                 Text(
-                    text = "Сбросить",
+                    text = stringResource(id = R.string.reset),
                     style = MaterialTheme.typography.labelLarge,
                 )
             }

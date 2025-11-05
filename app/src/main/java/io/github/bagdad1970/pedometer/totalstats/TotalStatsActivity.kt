@@ -1,6 +1,7 @@
 package io.github.bagdad1970.pedometer.totalstats
 
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,30 +16,40 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import io.github.bagdad1970.pedometer.AppActivity
 import io.github.bagdad1970.pedometer.BottomNavigationBar
 import io.github.bagdad1970.pedometer.R
 import io.github.bagdad1970.pedometer.ui.components.TotalInfo
 import io.github.bagdad1970.pedometer.ui.components.WeekInfo
+import io.github.bagdad1970.pedometer.ui.theme.PedometerTheme
+import io.github.bagdad1970.pedometer.utils.LocaleHelper
 
 
 class TotalStatsActivity : ComponentActivity() {
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(newBase?.let { LocaleHelper.setLocale(it, LocaleHelper.getLanguage(it)) })
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContent {
-            Scaffold (
-                modifier = Modifier
-                    .fillMaxSize(),
-                bottomBar = { BottomNavigationBar(AppActivity.TOTAL_STATS) }
-            ) { innerPadding ->
-                Surface(
+            PedometerTheme {
+                Scaffold (
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding)
-                ) {
-                    TotalStatsScreen(modifier = Modifier.padding(innerPadding))
+                        .fillMaxSize(),
+                    bottomBar = { BottomNavigationBar(AppActivity.TOTAL_STATS) }
+                ) { innerPadding ->
+                    Surface(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
+                    ) {
+                        TotalStatsScreen(modifier = Modifier.padding(innerPadding))
+                    }
                 }
             }
         }
@@ -50,7 +61,12 @@ fun TotalStatsScreen(modifier: Modifier) {
 
     Column(
         modifier = modifier
-            .padding(top = 20.dp, start = 10.dp, end = 10.dp, bottom = 10.dp)
+            .padding(
+                top = dimensionResource(id = R.dimen.total_screen_top),
+                start = dimensionResource(id = R.dimen.total_screen_start),
+                end = dimensionResource(id = R.dimen.total_screen_end),
+                bottom = dimensionResource(id = R.dimen.total_screen_bottom)
+            )
     ) {
         WeekInfo()
 
@@ -64,7 +80,7 @@ fun TotalStatsScreen(modifier: Modifier) {
                 value = "25648"
             )
 
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.total_screen_spacer)))
 
             TotalInfo(
                 modifier = Modifier.weight(1f),

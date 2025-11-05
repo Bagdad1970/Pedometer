@@ -13,10 +13,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.github.bagdad1970.pedometer.R
 
 @Composable
 fun TotalInfo(modifier: Modifier,
@@ -25,12 +26,12 @@ fun TotalInfo(modifier: Modifier,
 ) {
     Card(
         modifier = modifier
-            .padding(8.dp)
+            .padding(dimensionResource(id = R.dimen.total_info_card))
             .aspectRatio(1f)
     ) {
         Column(modifier = Modifier
             .fillMaxSize()
-            .padding(10.dp),
+            .padding(dimensionResource(id = R.dimen.total_info_column)),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         )
@@ -41,7 +42,9 @@ fun TotalInfo(modifier: Modifier,
                 textAlign = TextAlign.Left,
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(8.dp))
+
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.total_info_column_spacer)))
+
             Text(
                 text = value,
                 fontSize = 18.sp,

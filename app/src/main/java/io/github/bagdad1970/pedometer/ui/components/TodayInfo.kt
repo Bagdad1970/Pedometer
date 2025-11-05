@@ -15,10 +15,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import io.github.bagdad1970.pedometer.R
 
 
@@ -27,7 +27,7 @@ fun TodayInfo() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(dimensionResource(id = R.dimen.today_info)),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
@@ -46,17 +46,17 @@ fun TodayInfoColumn(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .padding(8.dp)
-            .width(60.dp)
-            .height(120.dp)
+            .padding(dimensionResource(id = R.dimen.today_info_column_padding))
+            .width(dimensionResource(id = R.dimen.today_info_column_width))
+            .height(dimensionResource(id = R.dimen.today_info_column_height))
     ) {
         Icon(
             painter = painterResource(id = iconResId),
             contentDescription = type,
-            modifier = Modifier.size(30.dp)
+            modifier = Modifier.size(dimensionResource(id = R.dimen.today_info_icon))
         )
 
-        Spacer(modifier = Modifier.height(6.dp))
+        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.today_info_spacer1)))
 
         Text(
             text = value,
@@ -64,7 +64,7 @@ fun TodayInfoColumn(
             fontWeight = FontWeight.Bold
         )
 
-        Spacer(modifier = Modifier.height(2.dp))
+        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.today_info_spacer2)))
 
         Text(
             text = type,

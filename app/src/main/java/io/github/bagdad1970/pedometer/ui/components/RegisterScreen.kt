@@ -4,15 +4,12 @@ import android.content.SharedPreferences
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -24,20 +21,22 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.unit.dp
+import androidx.core.content.edit
+import io.github.bagdad1970.pedometer.R
 import io.github.bagdad1970.pedometer.utils.isValidEmail
 import io.github.bagdad1970.pedometer.utils.isValidPassword
 import kotlinx.coroutines.launch
-import androidx.core.content.edit
 
 @Composable
 fun RegisterScreen(
+    modifier: Modifier = Modifier,
     onBackToLogin: () -> Unit = {},
     onRegisterSuccess: (String) -> Unit = {},
     sharedPreferences: SharedPreferences,
     snackbarHostState: SnackbarHostState,
-    modifier: Modifier = Modifier
 ) {
     var username by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -52,7 +51,7 @@ fun RegisterScreen(
 
     Box(
         modifier = modifier
-            .padding(24.dp),
+            .padding(dimensionResource(id = R.dimen.auth_screen)),
         contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -61,7 +60,7 @@ fun RegisterScreen(
                 onValueChange = {
                     username = it
                 },
-                label = { Text("Username") },
+                label = { Text(stringResource(id = R.string.username)) },
                 isError = userNameError != null,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -72,14 +71,14 @@ fun RegisterScreen(
                     email = it
                     emailError = null
                 },
-                label = { Text("Email") },
+                label = { Text(stringResource(id = R.string.email)) },
                 isError = emailError != null,
                 modifier = Modifier.fillMaxWidth()
             )
             if (emailError != null)
                 Text(emailError!!, color = MaterialTheme.colorScheme.error)
 
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(dimensionResource(id = R.dimen.auth_screen_spacer1)))
 
             OutlinedTextField(
                 value = password,
@@ -87,7 +86,7 @@ fun RegisterScreen(
                     password = it
                     passwordError = null
                 },
-                label = { Text("Пароль") },
+                label = { Text(stringResource(id = R.string.password)) },
                 isError = passwordError != null,
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth()
@@ -95,7 +94,7 @@ fun RegisterScreen(
             if (passwordError != null)
                 Text(passwordError!!, color = MaterialTheme.colorScheme.error)
 
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(dimensionResource(id = R.dimen.auth_screen_spacer1)))
 
             OutlinedTextField(
                 value = confirmPassword,
@@ -103,7 +102,7 @@ fun RegisterScreen(
                     confirmPassword = it
                     confirmPasswordError = null
                 },
-                label = { Text("Подтвердите пароль") },
+                label = { Text(stringResource(id = R.string.confirm_password)) },
                 isError = confirmPasswordError != null,
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth()
@@ -111,27 +110,32 @@ fun RegisterScreen(
             if (confirmPasswordError != null)
                 Text(confirmPasswordError!!, color = MaterialTheme.colorScheme.error)
 
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(dimensionResource(id = R.dimen.auth_screen_spacer2)))
+
+            val enterTheUsernameMsg = stringResource(id = R.string.enter_the_username)
+            val emailErrorMsg = stringResource(id = R.string.invalid_email)
+            val passwordErrorMsg = stringResource(id = R.string.invalid_password)
+            val passwordsAreNotEqualMsg = stringResource(id = R.string.passwords_are_not_equal)
 
             Button(
                 onClick = {
                     var valid = true
 
                     if (username.isBlank()) {
-                        userNameError = "Введите имя пользователя"
+                        userNameError = enterTheUsernameMsg
                         valid = false
                     }
 
                     if (!isValidEmail(email)) {
-                        emailError = "Некорректный email"
+                        emailError = emailErrorMsg
                         valid = false
                     }
                     if (!isValidPassword(password)) {
-                        passwordError = "Некорректный пароль"
+                        passwordError = passwordErrorMsg
                         valid = false
                     }
                     if (password != confirmPassword) {
-                        confirmPasswordError = "Пароли не совпадают"
+                        confirmPasswordError = passwordsAreNotEqualMsg
                         valid = false
                     }
 
@@ -145,19 +149,19 @@ fun RegisterScreen(
                     }
 
                     coroutineScope.launch {
-                        snackbarHostState.showSnackbar("Регистрация успешна!")
+                        snackbarHostState.showSnackbar("")
                         onRegisterSuccess(email)
                     }
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Зарегистрироваться")
+                Text(stringResource(id = R.string.have_an_account))
             }
 
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(dimensionResource(id = R.dimen.auth_screen_spacer3)))
 
             TextButton(onClick = onBackToLogin) {
-                Text("Уже есть аккаунт? Войти")
+                Text(stringResource(id = R.string.have_an_account))
             }
         }
     }

@@ -4,15 +4,12 @@ import android.content.SharedPreferences
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -25,12 +22,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.unit.dp
 import io.github.bagdad1970.pedometer.utils.isValidEmail
 import io.github.bagdad1970.pedometer.utils.isValidPassword
 import kotlinx.coroutines.launch
 import androidx.core.content.edit
+import io.github.bagdad1970.pedometer.R
 
 @Composable
 fun LoginScreen(
@@ -56,7 +55,7 @@ fun LoginScreen(
 
     Box(
         modifier = modifier
-            .padding(24.dp),
+            .padding(dimensionResource(id = R.dimen.auth_screen)),
         contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -66,14 +65,14 @@ fun LoginScreen(
                     email = it
                     emailError = null
                 },
-                label = { Text("Email") },
+                label = { Text(stringResource(id = R.string.email)) },
                 isError = emailError != null,
                 modifier = Modifier.fillMaxWidth()
             )
             if (emailError != null)
                 Text(emailError!!, color = MaterialTheme.colorScheme.error)
 
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(dimensionResource(id = R.dimen.auth_screen_spacer1)))
 
             OutlinedTextField(
                 value = password,
@@ -81,7 +80,7 @@ fun LoginScreen(
                     password = it
                     passwordError = null
                 },
-                label = { Text("Пароль") },
+                label = { Text(stringResource(id = R.string.password)) },
                 isError = passwordError != null,
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth()
@@ -89,17 +88,21 @@ fun LoginScreen(
             if (passwordError != null)
                 Text(passwordError!!, color = MaterialTheme.colorScheme.error)
 
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(dimensionResource(id = R.dimen.auth_screen_spacer2)))
+
+            val emailErrorMsg = stringResource(id = R.string.invalid_email)
+            val passwordErrorMsg = stringResource(id = R.string.invalid_password)
+            val invalidEmailOrPasswordMsg = stringResource(id = R.string.invalid_email_or_password)
 
             Button(
                 onClick = {
                     var valid = true
                     if (!isValidEmail(email)) {
-                        emailError = "Некорректный email"
+                        emailError = emailErrorMsg
                         valid = false
                     }
                     if (!isValidPassword(password)) {
-                        passwordError = "Некорректный пароль"
+                        passwordError = passwordErrorMsg
                         valid = false
                     }
 
@@ -113,21 +116,22 @@ fun LoginScreen(
                             putBoolean("is_logged_in", true)
                         }
                         onLoginSuccess(email)
-                    } else {
+                    }
+                    else {
                         coroutineScope.launch {
-                            snackbarHostState.showSnackbar("Неверный email или пароль")
+                            snackbarHostState.showSnackbar(invalidEmailOrPasswordMsg)
                         }
                     }
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Войти")
+                Text(stringResource(id = R.string.login))
             }
 
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(dimensionResource(id = R.dimen.auth_screen_spacer3)))
 
             TextButton(onClick = onRegisterClick) {
-                Text("Нет аккаунта? Зарегистрироваться")
+                Text(stringResource(id = R.string.dont_have_an_account))
             }
         }
     }

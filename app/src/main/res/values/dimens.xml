@@ -1,5 +1,77 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- BottomNavigationBar -->
+    <dimen name="bottom_navigation_bar_height">64dp</dimen>
+
+    <!-- TodayStats -->
+    <dimen name="today_screen">16dp</dimen>
+
+    <dimen name="steps_progress">16dp</dimen>
+    <dimen name="steps_progress_indicator_size">350dp</dimen>
+    <dimen name="steps_progress_indicator_stroke_width">14dp</dimen>
+    <dimen name="steps_progress_spacer">15dp</dimen>
+
+    <dimen name="today_info">16dp</dimen>
+    <dimen name="today_info_row">16dp</dimen>
+    <dimen name="today_info_column_padding">8dp</dimen>
+    <dimen name="today_info_column_width">60dp</dimen>
+    <dimen name="today_info_column_height">120dp</dimen>
+    <dimen name="today_info_spacer1">6dp</dimen>
+    <dimen name="today_info_spacer2">2dp</dimen>
+    <dimen name="today_info_icon">30dp</dimen>
+
+    <!-- TotalStats -->
+    <dimen name="total_screen_top">20dp</dimen>
+    <dimen name="total_screen_start">10dp</dimen>
+    <dimen name="total_screen_end">10dp</dimen>
+    <dimen name="total_screen_bottom">10dp</dimen>
+    <dimen name="total_screen_spacer">8dp</dimen>
+
+    <dimen name="week_info_card">16dp</dimen>
+    <dimen name="week_info_card_column">7dp</dimen>
+    <dimen name="week_info_card_steps_by_days">120dp</dimen>
+    <dimen name="week_info_card_steps_by_day_text">4dp</dimen>
+    <dimen name="week_info_card_column_width">24dp</dimen>
+    <dimen name="week_info_card_column_shape">4dp</dimen>
+    <dimen name="week_info_week_days">4dp</dimen>
+
+    <dimen name="total_info_card">8dp</dimen>
+    <dimen name="total_info_column">10dp</dimen>
+    <dimen name="total_info_column_spacer">8dp</dimen>
+
+    <!-- SettingsActivity -->
+    <dimen name="settings_screen_column">12dp</dimen>
+    <dimen name="settings_screen_button_vertical">8dp</dimen>
+    <dimen name="settings_screen_card_bottom">20dp</dimen>
+    <dimen name="settings_screen_card_column_bottom">16dp</dimen>
+    <dimen name="settings_screen_card_text_bottom">20dp</dimen>
+    <dimen name="personal_detail_row">4dp</dimen>
+    <dimen name="person_detail_row_horizontal_arrangement">8dp</dimen>
+    <dimen name="personal_detail_icon">20dp</dimen>
+    <dimen name="personal_detail_margin_bottom">8dp</dimen>
+    <dimen name="person_detail_dropdown_menu_item">4dp</dimen>
+    <dimen name="person_detail_dropdown_menu_item_icon">20dp</dimen>
+
+
+    <!-- DialogWithNumberPicker -->
+    <dimen name="dialog_number_picker_height">250dp</dimen>
+    <dimen name="dialog_number_picker_padding">12dp</dimen>
+    <dimen name="dialog_number_picker_card_corner_radius">16dp</dimen>
+    <dimen name="dialog_number_picker_text_padding">8dp</dimen>
+    <dimen name="dialog_number_picker_button_padding">8dp</dimen>
+
+    <!-- NumberPicker -->
+    <dimen name="number_picker_outer_padding">10dp</dimen>
+    <dimen name="number_picker_item_padding">5dp</dimen>
+    <dimen name="number_picker_item_height">16dp</dimen>
+
+
+    <!-- AuthScreen -->
+    <dimen name="auth_screen">24dp</dimen>
+    <dimen name="auth_screen_spacer1">8dp</dimen>
+    <dimen name="auth_screen_spacer2">24dp</dimen>
+    <dimen name="auth_screen_spacer3">12dp</dimen>
+
+
+
 </resources>

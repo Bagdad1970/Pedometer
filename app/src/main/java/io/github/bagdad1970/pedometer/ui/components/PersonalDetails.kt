@@ -19,8 +19,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
+import io.github.bagdad1970.pedometer.R
 
 
 @Composable
@@ -52,9 +54,9 @@ fun NumberPersonalDetailChoice(
             Row(
                 modifier = Modifier
                     .clickable { openDialog = true }
-                    .padding(4.dp),
+                    .padding(dimensionResource(id = R.dimen.personal_detail_row)),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.person_detail_row_horizontal_arrangement))
             ) {
                 Text(
                     text = "$value ${metric ?: ""}".trim(),
@@ -65,8 +67,8 @@ fun NumberPersonalDetailChoice(
 
                 Icon(
                     imageVector = Icons.Default.ArrowDropDown,
-                    contentDescription = "Выбрать $detailName",
-                    modifier = Modifier.size(20.dp)
+                    contentDescription = "${stringResource(id = R.string.choose_detail)} $detailName",
+                    modifier = Modifier.size(dimensionResource(id = R.dimen.personal_detail_icon))
                 )
             }
 

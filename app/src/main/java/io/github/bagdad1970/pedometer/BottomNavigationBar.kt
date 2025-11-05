@@ -12,21 +12,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import io.github.bagdad1970.pedometer.settings.SettingsActivity
 import io.github.bagdad1970.pedometer.todaystats.TodayStatsActivity
 import io.github.bagdad1970.pedometer.totalstats.TotalStatsActivity
 
 
 @Composable
-fun BottomNavigationBar(currentScreen: AppActivity) {
+fun BottomNavigationBar(
+    currentScreen: AppActivity,
+    todaySteps: Int = 0,
+    targetSteps: Int = 10000
+) {
     val context = LocalContext.current
 
     NavigationBar(
-        modifier = Modifier.height(64.dp),
-        containerColor = Color(145, 116, 230)
+        modifier = Modifier.height(dimensionResource(id = R.dimen.bottom_navigation_bar_height)),
+        containerColor = colorResource(id = R.color.navigation_bar_container),
     ) {
         NavigationBarItem(
             icon = { Icon(painter = painterResource(R.drawable.today_statistics_nav_icon), contentDescription = "today") },
@@ -60,8 +65,11 @@ fun BottomNavigationBar(currentScreen: AppActivity) {
             selected = currentScreen == AppActivity.SETTINGS,
             onClick = {
                 if (currentScreen != AppActivity.SETTINGS) {
-                    val intent = Intent(context, SettingsActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                    val intent = Intent(context, SettingsActivity::class.java).apply {
+                        putExtra(TodayStatsActivity.EXTRA_TODAY_STEPS, todaySteps)
+                        putExtra(TodayStatsActivity.EXTRA_TARGET_STEPS, targetSteps)
+                        addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                    }
                     context.startActivity(intent)
                 }
             }

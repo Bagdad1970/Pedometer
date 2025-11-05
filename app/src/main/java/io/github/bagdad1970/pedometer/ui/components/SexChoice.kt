@@ -21,9 +21,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.github.bagdad1970.pedometer.R
 import io.github.bagdad1970.pedometer.settings.Sex
@@ -50,15 +50,13 @@ fun SexChoice(
             fontSize = 18.sp
         )
 
-
-
         Box {
             Row(
                 modifier = Modifier
                     .clickable { expanded = true }
-                    .padding(4.dp),
+                    .padding(dimensionResource(id = R.dimen.personal_detail_row)),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.person_detail_row_horizontal_arrangement))
             ) {
                 Text(
                     text = when (sex) {
@@ -72,8 +70,8 @@ fun SexChoice(
 
                 Icon(
                     imageVector = Icons.Default.ArrowDropDown,
-                    contentDescription = "Выбрать пол",
-                    modifier = Modifier.size(20.dp)
+                    contentDescription = "choose_sex",
+                    modifier = Modifier.size(dimensionResource(id = R.dimen.personal_detail_icon))
                 )
             }
 
@@ -85,7 +83,7 @@ fun SexChoice(
                     text = {
                         Text(
                             text = stringResource(id = R.string.male),
-                            modifier = Modifier.padding(start = 4.dp)
+                            modifier = Modifier.padding(start = dimensionResource(id = R.dimen.person_detail_dropdown_menu_item))
                         )
                     },
                     onClick = {
@@ -96,7 +94,7 @@ fun SexChoice(
                         Icon(
                             painter = painterResource(R.drawable.male),
                             contentDescription = "male",
-                            modifier = Modifier.size(20.dp)
+                            modifier = Modifier.size(dimensionResource(id = R.dimen.person_detail_dropdown_menu_item_icon))
                         )
                     }
                 )
@@ -105,7 +103,7 @@ fun SexChoice(
                     text = {
                         Text(
                             text = stringResource(id = R.string.female),
-                            modifier = Modifier.padding(start = 4.dp)
+                            modifier = Modifier.padding(start =dimensionResource(id = R.dimen.person_detail_dropdown_menu_item))
                         )
                     },
                     onClick = {
@@ -116,7 +114,7 @@ fun SexChoice(
                         Icon(
                             painter = painterResource(R.drawable.female),
                             contentDescription = "female",
-                            modifier = Modifier.size(20.dp)
+                            modifier = Modifier.size(dimensionResource(id = R.dimen.person_detail_dropdown_menu_item_icon))
                         )
                     }
                 )

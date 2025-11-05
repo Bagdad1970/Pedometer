@@ -28,10 +28,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import io.github.bagdad1970.pedometer.R
 
 
 @Composable
@@ -49,9 +51,9 @@ fun DialogWithNumberPicker(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(250.dp)
-                .padding(12.dp),
-            shape = RoundedCornerShape(16.dp),
+                .height(dimensionResource(id = R.dimen.dialog_number_picker_height))
+                .padding(dimensionResource(id = R.dimen.dialog_number_picker_padding)),
+            shape = RoundedCornerShape(dimensionResource(id = R.dimen.dialog_number_picker_card_corner_radius)),
         ) {
             Column(
                 modifier = Modifier
@@ -62,7 +64,7 @@ fun DialogWithNumberPicker(
                 Text(
                     text = "Ваш $detailName:",
                     modifier = Modifier
-                        .padding(8.dp),
+                        .padding(dimensionResource(id = R.dimen.dialog_number_picker_text_padding)),
                 )
 
                 NumberPicker(
@@ -80,15 +82,15 @@ fun DialogWithNumberPicker(
                 ) {
                     TextButton(
                         onClick = onDismissRequest,
-                        modifier = Modifier.padding(8.dp),
+                        modifier = Modifier.padding(dimensionResource(id = R.dimen.dialog_number_picker_button_padding)),
                     ) {
-                        Text("Отмена")
+                        Text(stringResource(id = R.string.cancel))
                     }
                     TextButton(
                         onClick = { onConfirmation(selectedValue) },
-                        modifier = Modifier.padding(8.dp),
+                        modifier = Modifier.padding(dimensionResource(id = R.dimen.dialog_number_picker_button_padding)),
                     ) {
-                        Text("ОК")
+                        Text(stringResource(id = R.string.ok))
                     }
                 }
             }
@@ -113,8 +115,8 @@ fun NumberPicker(
         LazyColumn(
             state = rememberLazyListState(),
             modifier = Modifier
-                .padding(10.dp)
-                .height(16.dp * shownCount)
+                .padding(dimensionResource(id = R.dimen.number_picker_outer_padding))
+                .height(dimensionResource(id = R.dimen.number_picker_item_height) * shownCount)
                 .graphicsLayer { compositingStrategy = CompositingStrategy.Offscreen }
                 .drawWithContent {
                     drawContent()
@@ -130,7 +132,7 @@ fun NumberPicker(
         ) {
             item {
                 Text(
-                    modifier = Modifier.padding(5.dp),
+                    modifier = Modifier.padding(dimensionResource(id = R.dimen.number_picker_item_padding)),
                     text = " ",
                     fontSize = 16.sp
                 )
@@ -140,7 +142,7 @@ fun NumberPicker(
                 val value = startValue + index
                 Text(
                     modifier = Modifier
-                        .padding(5.dp)
+                        .padding(dimensionResource(id = R.dimen.number_picker_item_padding))
                         .fillMaxWidth()
                         .clickable {
                             onValueChanged(value)
@@ -153,7 +155,7 @@ fun NumberPicker(
 
             item {
                 Text(
-                    modifier = Modifier.padding(5.dp),
+                    modifier = Modifier.padding(dimensionResource(id = R.dimen.number_picker_item_padding)),
                     text = " ",
                     fontSize = 16.sp
                 )

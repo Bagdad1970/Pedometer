@@ -3,6 +3,7 @@
     <string name="app_name">Шагомер</string>
 
     <!-- Bottom Navigation -->
+    <string name="ok">ОК</string>
     <string name="today_stats_nav">Сегодня</string>
     <string name="total_stats_nav">Всего</string>
     <string name="settings_nav">Настройки</string>
@@ -15,6 +16,7 @@
     <string name="time_today">Время</string>
 
     <!-- Total screen -->
+    <string name="reset">Сбросить</string>
     <string name="week_label">Последние 7 дней</string>
     <string name="monday">Пн</string>
     <string name="tuesday">Вт</string>
@@ -29,15 +31,40 @@
     <string name="total_max_distance_metric">км</string>
 
     <!-- Settings screen -->
+    <string name="greetings">Здравствуйте</string>
+    <string name="language_name">Язык</string>
+    <string name="last_week">Последняя неделя</string>
     <string name="sex_name">Пол</string>
     <string name="height_name">Рост</string>
     <string name="weight_name">Вес</string>
     <string name="age_name">Возраст</string>
 
+    <string name="choose_detail">Выбрать</string>
     <string name="male">Мужской</string>
     <string name="female">Женский</string>
     <string name="height_metric">см</string>
     <string name="weight_metric">кг</string>
     <string name="age_metric">лет</string>
+
+
+    <!-- Auth screen -->
+    <string name="sign_up">Зарегистрироваться</string>
+    <string name="sign_in">Авторизация</string>
+    <string name="username">Имя пользователя</string>
+    <string name="email">Email</string>
+    <string name="password">Пароль</string>
+    <string name="confirm_password">Подтвердите пароль</string>
+    <string name="enter_the_username">Введите имя пользователя</string>
+    <string name="invalid_email">Некорректный email</string>
+    <string name="invalid_password">Некорректный пароль</string>
+    <string name="passwords_are_not_equal">Пароли не совпадают</string>
+    <string name="success_sign_up">Регистрация успешна!</string>
+    <string name="have_an_account">Войти</string>
+    <string name="invalid_email_or_password">Неверный email или пароль</string>
+    <string name="login">Войти</string>
+    <string name="dont_have_an_account">Нет аккаунта? Зарегистрироваться</string>
+    <string name="language_choice">Выберите язык</string>
+    <string name="cancel">Отмена</string>
+
 
 </resources>

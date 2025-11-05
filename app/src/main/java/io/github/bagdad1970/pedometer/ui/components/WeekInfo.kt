@@ -17,8 +17,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import io.github.bagdad1970.pedometer.R
 import java.util.Locale
 
 @Composable
@@ -30,10 +33,10 @@ fun WeekInfo() {
 
     Card(modifier = Modifier
         .fillMaxWidth()
-        .padding(bottom = 16.dp)
+        .padding(bottom = dimensionResource(id = R.dimen.week_info_card))
     ) {
         Column(
-            modifier = Modifier.padding(7.dp)
+            modifier = Modifier.padding(dimensionResource(id = R.dimen.week_info_card_column))
         ) {
 
             Row(
@@ -41,7 +44,7 @@ fun WeekInfo() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Последние 7 дней",
+                    text = stringResource(id = R.string.last_week),
                     style = MaterialTheme.typography.titleSmall,
                     modifier = Modifier.weight(1f)
                 )
@@ -50,7 +53,7 @@ fun WeekInfo() {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(120.dp),
+                    .height(dimensionResource(id = R.dimen.week_info_card_steps_by_days)),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.Bottom
             ) {
@@ -65,31 +68,31 @@ fun WeekInfo() {
                             style = MaterialTheme.typography.labelSmall,
                             textAlign = TextAlign.Center,
                             modifier = Modifier
-                                .padding(top = 4.dp)
+                                .padding(top = dimensionResource(id = R.dimen.week_info_card_steps_by_day_text))
                         )
 
                         Box(
                             modifier = Modifier
-                                .width(24.dp)
+                                .width(dimensionResource(id = R.dimen.week_info_card_column_width))
                                 .height((boxHeight * 80).dp)
                                 .background(
                                     color = MaterialTheme.colorScheme.primary,
-                                    shape = RoundedCornerShape(4.dp)
+                                    shape = RoundedCornerShape(dimensionResource(id = R.dimen.week_info_card_column_shape))
                                 )
                         )
 
                         Text(
                             text = when (index) {
-                                0 -> "Пн"
-                                1 -> "Вт"
-                                2 -> "Ср"
-                                3 -> "Чт"
-                                4 -> "Пт"
-                                5 -> "Сб"
-                                else -> "Вс"
+                                0 -> stringResource(id = R.string.monday)
+                                1 -> stringResource(id = R.string.tuesday)
+                                2 -> stringResource(id = R.string.wednesday)
+                                3 -> stringResource(id = R.string.thursday)
+                                4 -> stringResource(id = R.string.friday)
+                                5 -> stringResource(id = R.string.saturday)
+                                else -> stringResource(id = R.string.sunday)
                             },
                             style = MaterialTheme.typography.labelSmall,
-                            modifier = Modifier.padding(top = 4.dp)
+                            modifier = Modifier.padding(top = dimensionResource(id = R.dimen.week_info_week_days))
                         )
                     }
 

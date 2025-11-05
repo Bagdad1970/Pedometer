@@ -2,6 +2,9 @@
 
     <string name="app_name">Pedometer</string>
 
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+
     <!-- Bottom Navigation -->
     <string name="today_stats_nav">Today</string>
     <string name="total_stats_nav">Total</string>
@@ -13,6 +16,7 @@
     <string name="kilometers_today">km</string>
     <string name="kilocalories_today">kcal</string>
     <string name="time_today">Time</string>
+    <string name="reset">Reset</string>
 
     <!-- Total screen -->
     <string name="week_label">The last 7 days</string>
@@ -27,18 +31,41 @@
     <string name="max_steps_per_day">Max steps per day</string>
     <string name="max_distance_per_day">Max distance per day</string>
     <string name="total_max_distance_metric">km</string>
+    <string name="last_week">Last week</string>
 
     <!-- Settings screen -->
     <string name="sex_name">Sex</string>
     <string name="height_name">Height</string>
     <string name="weight_name">Weight</string>
     <string name="age_name">Age</string>
+    <string name="language_choice">Choose a language</string>
+    <string name="choose_detail">Choose</string>
 
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="height_metric">cm</string>
     <string name="weight_metric">kg</string>
     <string name="age_metric">years</string>
+
+
+    <!-- Auth screen -->
+    <string name="sign_up">Sign up</string>
+    <string name="sign_in">Sign in</string>
+    <string name="greetings">Hello</string>
+    <string name="language_name">Language</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="enter_the_username">Enter the username</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="invalid_password">Invalid password</string>
+    <string name="passwords_are_not_equal">Passwords are not equal</string>
+    <string name="success_sign_up">Success signing up</string>
+    <string name="dont_have_an_account">Don\'t have an account?</string>
+    <string name="invalid_email_or_password">Invalid email or password</string>
+    <string name="login">Sign in</string>
+    <string name="have_an_account">Sign in</string>
 
 
 </resources>
