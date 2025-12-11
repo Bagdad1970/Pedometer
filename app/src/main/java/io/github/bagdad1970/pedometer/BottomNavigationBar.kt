@@ -66,8 +66,8 @@ fun BottomNavigationBar(
             onClick = {
                 if (currentScreen != AppActivity.SETTINGS) {
                     val intent = Intent(context, SettingsActivity::class.java).apply {
-                        putExtra(TodayStatsActivity.EXTRA_TODAY_STEPS, todaySteps)
-                        putExtra(TodayStatsActivity.EXTRA_TARGET_STEPS, targetSteps)
+//                        putExtra(TodayStatsActivity.EXTRA_TODAY_STEPS, todaySteps)
+//                        putExtra(TodayStatsActivity.EXTRA_TARGET_STEPS, targetSteps)
                         addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                     }
                     context.startActivity(intent)

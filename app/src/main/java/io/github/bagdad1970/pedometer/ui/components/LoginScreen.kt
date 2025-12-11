@@ -25,19 +25,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import io.github.bagdad1970.pedometer.utils.isValidEmail
-import io.github.bagdad1970.pedometer.utils.isValidPassword
 import kotlinx.coroutines.launch
 import androidx.core.content.edit
 import io.github.bagdad1970.pedometer.R
+import io.github.bagdad1970.pedometer.dao.UserDao
 
 @Composable
 fun LoginScreen(
+    modifier: Modifier = Modifier,
+    userDao: UserDao,
     onRegisterClick: () -> Unit = {},
     onLoginSuccess: (String) -> Unit = {},
     sharedPreferences: SharedPreferences,
-    snackbarHostState: SnackbarHostState,
-    modifier: Modifier = Modifier
+    snackbarHostState: SnackbarHostState
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -90,40 +90,32 @@ fun LoginScreen(
 
             Spacer(Modifier.height(dimensionResource(id = R.dimen.auth_screen_spacer2)))
 
-            val emailErrorMsg = stringResource(id = R.string.invalid_email)
-            val passwordErrorMsg = stringResource(id = R.string.invalid_password)
             val invalidEmailOrPasswordMsg = stringResource(id = R.string.invalid_email_or_password)
 
             Button(
+                modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    var valid = true
-                    if (!isValidEmail(email)) {
-                        emailError = emailErrorMsg
-                        valid = false
-                    }
-                    if (!isValidPassword(password)) {
-                        passwordError = passwordErrorMsg
-                        valid = false
-                    }
-
-                    if (!valid) return@Button
-
-                    val savedEmail = sharedPreferences.getString("user_email", "")
-                    val savedPassword = sharedPreferences.getString("user_password", "")
-
-                    if (email == savedEmail && password == savedPassword) {
-                        sharedPreferences.edit {
-                            putBoolean("is_logged_in", true)
+                    coroutineScope.launch {
+                        try {
+                            val user = userDao.findByEmail(email)
+                            if (password == user.password) {
+                                sharedPreferences.edit {
+                                    putString("user_name", user.username)
+                                    putString("user_email", user.email)
+                                    putBoolean("is_logged_in", true)
+                                }
+                                onLoginSuccess(user.email)
+                            }
+                            else {
+                                snackbarHostState.showSnackbar(invalidEmailOrPasswordMsg)
+                            }
                         }
-                        onLoginSuccess(email)
-                    }
-                    else {
-                        coroutineScope.launch {
-                            snackbarHostState.showSnackbar(invalidEmailOrPasswordMsg)
+                        catch (e: Exception) {
+                            e.printStackTrace()
+                            snackbarHostState.showSnackbar("Login failed: ${e.message}")
                         }
                     }
-                },
-                modifier = Modifier.fillMaxWidth()
+                }
             ) {
                 Text(stringResource(id = R.string.login))
             }

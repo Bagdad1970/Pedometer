@@ -48,6 +48,7 @@
 
 
     <!-- Auth screen -->
+    <string name="target_metric">шагов</string>
     <string name="sign_up">Зарегистрироваться</string>
     <string name="sign_in">Авторизация</string>
     <string name="username">Имя пользователя</string>
@@ -63,6 +64,7 @@
     <string name="invalid_email_or_password">Неверный email или пароль</string>
     <string name="login">Войти</string>
     <string name="dont_have_an_account">Нет аккаунта? Зарегистрироваться</string>
+    <string name="target_name">Цель</string>
     <string name="language_choice">Выберите язык</string>
     <string name="cancel">Отмена</string>
 

@@ -26,6 +26,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.core.content.edit
 import io.github.bagdad1970.pedometer.R
+import io.github.bagdad1970.pedometer.dao.UserDao
+import io.github.bagdad1970.pedometer.entity.User
 import io.github.bagdad1970.pedometer.utils.isValidEmail
 import io.github.bagdad1970.pedometer.utils.isValidPassword
 import kotlinx.coroutines.launch
@@ -33,6 +35,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun RegisterScreen(
     modifier: Modifier = Modifier,
+    userDao: UserDao,
     onBackToLogin: () -> Unit = {},
     onRegisterSuccess: (String) -> Unit = {},
     sharedPreferences: SharedPreferences,
@@ -75,6 +78,7 @@ fun RegisterScreen(
                 isError = emailError != null,
                 modifier = Modifier.fillMaxWidth()
             )
+
             if (emailError != null)
                 Text(emailError!!, color = MaterialTheme.colorScheme.error)
 
@@ -91,6 +95,7 @@ fun RegisterScreen(
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth()
             )
+
             if (passwordError != null)
                 Text(passwordError!!, color = MaterialTheme.colorScheme.error)
 
@@ -107,6 +112,7 @@ fun RegisterScreen(
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth()
             )
+
             if (confirmPasswordError != null)
                 Text(confirmPasswordError!!, color = MaterialTheme.colorScheme.error)
 
@@ -118,6 +124,7 @@ fun RegisterScreen(
             val passwordsAreNotEqualMsg = stringResource(id = R.string.passwords_are_not_equal)
 
             Button(
+                modifier = Modifier.fillMaxWidth(),
                 onClick = {
                     var valid = true
 
@@ -141,19 +148,27 @@ fun RegisterScreen(
 
                     if (!valid) return@Button
 
-                    sharedPreferences.edit {
-                        putString("user_name", username)
-                            .putString("user_email", email)
-                            .putString("user_password", password)
-                            .putBoolean("is_logged_in", true)
-                    }
+                    val newUser = User(
+                        username = username,
+                        email = email,
+                        password = password
+                    )
 
                     coroutineScope.launch {
-                        snackbarHostState.showSnackbar("")
-                        onRegisterSuccess(email)
+                        try {
+                            userDao.insert(newUser)
+                            sharedPreferences.edit {
+                                putString("user_name", username)
+                                putString("user_email", email)
+                                putBoolean("is_logged_in", true)
+                            }
+                            onRegisterSuccess(email)
+                        }
+                        catch (e: Exception) {
+                            snackbarHostState.showSnackbar("Registration failed: ${e.message}")
+                        }
                     }
-                },
-                modifier = Modifier.fillMaxWidth()
+                }
             ) {
                 Text(stringResource(id = R.string.have_an_account))
             }

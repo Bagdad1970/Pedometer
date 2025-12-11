@@ -1,5 +1,3 @@
-// File: app/src/main/java/io/github/bagdad1970/pedometer/settings/SettingsActivity.kt
-
 package io.github.bagdad1970.pedometer.settings
 
 import android.content.Context
@@ -8,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -15,17 +14,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,19 +33,26 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.core.content.edit
+import androidx.compose.ui.unit.dp
 import io.github.bagdad1970.pedometer.AppActivity
 import io.github.bagdad1970.pedometer.BottomNavigationBar
+import io.github.bagdad1970.pedometer.PedometerApplication
 import io.github.bagdad1970.pedometer.R
-import io.github.bagdad1970.pedometer.todaystats.TodayStatsActivity
+import io.github.bagdad1970.pedometer.dao.UserDao
+import io.github.bagdad1970.pedometer.entity.User
 import io.github.bagdad1970.pedometer.ui.components.LanguageChoice
 import io.github.bagdad1970.pedometer.ui.components.NumberPersonalDetailChoice
 import io.github.bagdad1970.pedometer.ui.components.SexChoice
+import io.github.bagdad1970.pedometer.ui.components.StepDayTargetChoice
 import io.github.bagdad1970.pedometer.ui.theme.PedometerTheme
+import io.github.bagdad1970.pedometer.utils.Calculations
 import io.github.bagdad1970.pedometer.utils.LocaleHelper
+import kotlinx.coroutines.launch
 
 
 class SettingsActivity : ComponentActivity() {
+
+    private lateinit var userDao: UserDao
 
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(newBase?.let { LocaleHelper.setLocale(it, LocaleHelper.getLanguage(it)) })
@@ -54,13 +61,17 @@ class SettingsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val app = application as PedometerApplication
+        userDao = app.database.userDao()
+
         setContent {
             PedometerTheme {
-                val todaySteps = intent.getIntExtra(TodayStatsActivity.EXTRA_TODAY_STEPS, 0)
-                val targetSteps = intent.getIntExtra(TodayStatsActivity.EXTRA_TARGET_STEPS, 10000)
+//                val todaySteps = intent.getIntExtra(TodayStatsActivity.EXTRA_TODAY_STEPS, 0)
+//                val targetSteps = intent.getIntExtra(TodayStatsActivity.EXTRA_TARGET_STEPS, 10000)
                 SettingsScreen(
-                    todaySteps = todaySteps,
-                    targetSteps = targetSteps,
+                    userDao = userDao,
+                    todaySteps = 0,
+                    targetSteps = 10000,
                     onLanguageChanged = { newLanguageCode ->
                         LocaleHelper.setLocale(this, newLanguageCode)
                         recreate()
@@ -74,85 +85,96 @@ class SettingsActivity : ComponentActivity() {
 
 @Composable
 fun SettingsScreen(
+    userDao: UserDao,
     todaySteps: Int,
     targetSteps: Int,
     onLanguageChanged: (String) -> Unit
 ) {
-    val detailPrefs = LocalContext.current.getSharedPreferences("settings", Context.MODE_PRIVATE)
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
     val userPrefs = LocalContext.current.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
 
-    fun getSex(): Sex {
-        val sexString = detailPrefs.getString("sex", "MALE") ?: "MALE"
-        return try {
-            Sex.valueOf(sexString)
-        } catch (e: IllegalArgumentException) {
-            Sex.MALE
+    val userEmail = userPrefs.getString("user_email", null)
+
+    var currentUser by remember { mutableStateOf<User?>(null) }
+
+    LaunchedEffect(userEmail) {
+        if (!userEmail.isNullOrBlank()) {
+            try {
+                currentUser = userDao.findByEmail(userEmail)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
-    fun getLanguage(): String {
-        return detailPrefs.getString("language", "EN") ?: "EN"
-    }
+    val user = currentUser
+    var height by remember(user) { mutableIntStateOf(user?.height ?: 170) }
+    var weight by remember(user) { mutableIntStateOf(user?.weight ?: 70) }
+    var age by remember(user) { mutableIntStateOf(user?.age ?: 25) }
+    var sex by remember(user) { mutableStateOf(user?.sex ?: Sex.MALE) }
+    var language by remember(user) { mutableStateOf((user?.language ?: "EN").uppercase()) }
+    var target by remember(user) { mutableIntStateOf(user?.target ?: 10000) }
 
-    fun getHeight(): Int {
-        return detailPrefs.getInt("height", 170)
-    }
-
-    fun getWeight(): Int {
-        return detailPrefs.getInt("weight", 70)
-    }
-
-    fun getAge(): Int {
-        return detailPrefs.getInt("age", 25)
-    }
-
-    fun getUserName(): String {
-        return userPrefs.getString("user_name", "") ?: ""
-    }
-
-    var height by remember { mutableIntStateOf(getHeight()) }
-    var age by remember { mutableIntStateOf(getAge()) }
-    var weight by remember { mutableIntStateOf(getWeight()) }
-    var sex by remember { mutableStateOf(getSex()) }
-    var userName by remember { mutableStateOf(getUserName()) }
-    var language by remember { mutableStateOf(getLanguage()) }
-
-    fun setSex(newSex: Sex) {
-        if (sex != newSex) {
-            sex = newSex
-            detailPrefs.edit { putString("sex", newSex.toString()) }
+    fun updateStepLength() {
+        if (user == null) return
+        val newStepLength = Calculations.calculateStepLength(height, sex)
+        coroutineScope.launch {
+            userDao.updateStepLength(user.id, newStepLength)
         }
     }
 
-    fun setLanguage(newLanguage: String) {
-        if (language != newLanguage) {
-            language = newLanguage
-            detailPrefs.edit { putString("language", newLanguage) }
+    fun updateHeight(newHeight: Int) {
+        if (height == newHeight || user == null) return
+        height = newHeight
+        updateStepLength()
+        coroutineScope.launch {
+            userDao.updateHeight(user.id, newHeight)
         }
     }
 
-    fun setHeight(newHeight: Int) {
-        if (height != newHeight) {
-            height = newHeight
-            detailPrefs.edit { putInt("height", newHeight) }
+    fun updateWeight(newWeight: Int) {
+        if (weight == newWeight || user == null) return
+        weight = newWeight
+        coroutineScope.launch {
+            userDao.updateWeight(user.id, newWeight)
         }
     }
 
-    fun setWeight(newWeight: Int) {
-        if (weight != newWeight) {
-            weight = newWeight
-            detailPrefs.edit { putInt("weight", newWeight) }
+    fun updateAge(newAge: Int) {
+        if (age == newAge || user == null) return
+        age = newAge
+        coroutineScope.launch {
+            userDao.updateAge(user.id, newAge)
         }
     }
 
-    fun setAge(newAge: Int) {
-        if (age != newAge) {
-            age = newAge
-            detailPrefs.edit { putInt("age", newAge) }
+    fun updateSex(newSex: Sex) {
+        if (sex == newSex || user == null) return
+        sex = newSex
+        updateStepLength()
+        coroutineScope.launch {
+            userDao.updateSex(user.id, newSex)
         }
     }
 
-    val context = LocalContext.current
+    fun updateLanguage(newLanguage: String) {
+        val newLang = newLanguage.uppercase()
+        if (language == newLang || user == null) return
+        language = newLang
+        coroutineScope.launch {
+            userDao.updateLanguage(user.id, newLang)
+        }
+        onLanguageChanged(newLang)
+    }
+
+    fun updateTarget(newTarget: Int) {
+        if (target == newTarget || user == null) return
+        target = newTarget
+        coroutineScope.launch {
+            userDao.updateTarget(user.id, newTarget)
+        }
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -173,10 +195,7 @@ fun SettingsScreen(
                         if (language == "RU") "Поделиться" else "Share"))
                 }
             ) {
-                Icon(
-                    imageVector = Icons.Default.Share,
-                    contentDescription = "share"
-                )
+                Icon(imageVector = Icons.Default.Share, contentDescription = "share")
             }
         }
     ) { innerPadding ->
@@ -189,90 +208,97 @@ fun SettingsScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(dimensionResource(id = R.dimen.settings_screen_column)),
+                    .padding(dimensionResource(id = R.dimen.settings_screen_column))
+                    .padding(bottom = 80.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Button(
-                    onClick = {
-                        val intent = Intent(context, AuthActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-                        context.startActivity(intent)
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = dimensionResource(id = R.dimen.settings_screen_button_vertical))
+                Column(
+                    modifier = Modifier.weight(1f).fillMaxWidth()
                 ) {
-                    Text(stringResource(id = R.string.sign_in))
-                }
-
-                val isLoggedIn = userPrefs.getBoolean("is_logged_in", false)
-                if (isLoggedIn && getUserName().isNotEmpty()) {
-                    Card(
+                    Button(
+                        onClick = {
+                            context.startActivity(
+                                Intent(context, AuthActivity::class.java)
+                                    .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                            )
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = dimensionResource(id = R.dimen.settings_screen_card_bottom))
+                            .padding(vertical = dimensionResource(id = R.dimen.settings_screen_button_vertical))
                     ) {
-                        Column(
+                        Text(stringResource(id = R.string.sign_in))
+                    }
+
+                    val isLoggedIn = userPrefs.getBoolean("is_logged_in", false)
+                    val userName = userPrefs.getString("user_name", "") ?: ""
+                    if (isLoggedIn && userName.isNotEmpty()) {
+                        Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(dimensionResource(id = R.dimen.settings_screen_card_column_bottom)),
-                            horizontalAlignment = Alignment.Start
+                                .padding(dimensionResource(id = R.dimen.personal_detail_margin_bottom)),
                         ) {
-                            if (userName.isNotEmpty()) {
-                                Text(
-                                    text = "${stringResource(id = R.string.greetings)}: $userName",
-                                    fontWeight = FontWeight.Bold,
-                                    modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.settings_screen_card_text_bottom))
-                                )
-                            }
+                            Text(
+                                text = "${stringResource(id = R.string.greetings)}, $userName",
+                                fontWeight = FontWeight.Bold,
+                            )
                         }
                     }
+
+                    LanguageChoice(
+                        modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.personal_detail_margin_bottom)),
+                        detailName = stringResource(id = R.string.language_name),
+                        language = language,
+                        onChanged = { lang -> updateLanguage(lang) },
+                        onLanguageChanged = onLanguageChanged
+                    )
+
+                    SexChoice(
+                        modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.personal_detail_margin_bottom)),
+                        detailName = stringResource(id = R.string.sex_name),
+                        sex = sex,
+                        onChanged = { newSex -> updateSex(newSex) }
+                    )
+
+                    NumberPersonalDetailChoice(
+                        modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.personal_detail_margin_bottom)),
+                        detailName = stringResource(id = R.string.height_name),
+                        value = height,
+                        metric = stringResource(id = R.string.height_metric),
+                        startPickerValue = 60,
+                        endPickerValue = 250,
+                        onChanged = { newHeight -> updateHeight(newHeight) }
+                    )
+
+                    NumberPersonalDetailChoice(
+                        modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.personal_detail_margin_bottom)),
+                        detailName = stringResource(id = R.string.weight_name),
+                        value = weight,
+                        metric = stringResource(id = R.string.weight_metric),
+                        startPickerValue = 40,
+                        endPickerValue = 300,
+                        onChanged = { newWeight -> updateWeight(newWeight) }
+                    )
+
+                    NumberPersonalDetailChoice(
+                        modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.personal_detail_margin_bottom)),
+                        detailName = stringResource(id = R.string.age_name),
+                        value = age,
+                        metric = stringResource(id = R.string.age_metric),
+                        startPickerValue = 12,
+                        endPickerValue = 99,
+                        onChanged = { newAge -> updateAge(newAge) }
+                    )
+
+                    StepDayTargetChoice(
+                        modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.personal_detail_margin_bottom)),
+                        detailName = stringResource(id = R.string.target_name),
+                        value = target,
+                        metric = stringResource(id = R.string.target_metric),
+                        startPickerValue = 0,
+                        endPickerValue = 100000,
+                        onChanged = { newTarget -> updateTarget(newTarget) }
+                    )
                 }
-
-                LanguageChoice(
-                    modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.personal_detail_margin_bottom)),
-                    detailName = stringResource(id = R.string.language_name),
-                    language = language,
-                    onChanged = { newLanguage -> setLanguage(newLanguage) },
-                    onLanguageChanged = onLanguageChanged
-                )
-
-                SexChoice(
-                    modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.personal_detail_margin_bottom)),
-                    detailName = stringResource(id = R.string.sex_name),
-                    sex = sex,
-                    onChanged = { newSex -> setSex(newSex) }
-                )
-
-                NumberPersonalDetailChoice(
-                    modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.personal_detail_margin_bottom)),
-                    detailName = stringResource(id = R.string.height_name),
-                    value = height,
-                    metric = stringResource(id = R.string.height_metric),
-                    startPickerValue = 60,
-                    endPickerValue = 250,
-                    onChanged = { newHeight -> setHeight(newHeight) },
-                )
-
-                NumberPersonalDetailChoice(
-                    modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.personal_detail_margin_bottom)),
-                    detailName = stringResource(id = R.string.weight_name),
-                    value = weight,
-                    metric = stringResource(id = R.string.weight_metric),
-                    startPickerValue = 40,
-                    endPickerValue = 300,
-                    onChanged = { newWeight -> setWeight(newWeight) },
-                )
-
-                NumberPersonalDetailChoice(
-                    modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.personal_detail_margin_bottom)),
-                    detailName = stringResource(id = R.string.age_name),
-                    value = age,
-                    metric = stringResource(id = R.string.age_metric),
-                    startPickerValue = 12,
-                    endPickerValue = 99,
-                    onChanged = { newAge -> setAge(newAge) },
-                )
             }
         }
     }

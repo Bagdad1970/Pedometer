@@ -42,9 +42,9 @@
     <!-- SettingsActivity -->
     <dimen name="settings_screen_column">12dp</dimen>
     <dimen name="settings_screen_button_vertical">8dp</dimen>
-    <dimen name="settings_screen_card_bottom">20dp</dimen>
-    <dimen name="settings_screen_card_column_bottom">16dp</dimen>
-    <dimen name="settings_screen_card_text_bottom">20dp</dimen>
+    <dimen name="settings_screen_card_bottom">10dp</dimen>
+    <dimen name="settings_screen_card_column_bottom">8dp</dimen>
+    <dimen name="settings_screen_card_text_bottom">10dp</dimen>
     <dimen name="personal_detail_row">4dp</dimen>
     <dimen name="person_detail_row_horizontal_arrangement">8dp</dimen>
     <dimen name="personal_detail_icon">20dp</dimen>

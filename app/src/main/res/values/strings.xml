@@ -38,6 +38,7 @@
     <string name="height_name">Height</string>
     <string name="weight_name">Weight</string>
     <string name="age_name">Age</string>
+    <string name="target_name">Target</string>
     <string name="language_choice">Choose a language</string>
     <string name="choose_detail">Choose</string>
 
@@ -46,6 +47,7 @@
     <string name="height_metric">cm</string>
     <string name="weight_metric">kg</string>
     <string name="age_metric">years</string>
+    <string name="target_metric">steps</string>
 
 
     <!-- Auth screen -->
